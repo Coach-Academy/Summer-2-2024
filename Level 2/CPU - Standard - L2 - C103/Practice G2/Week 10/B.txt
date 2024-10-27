@@ -1,0 +1,28 @@
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+int n;
+int main() {
+    ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+    cin>>n;
+    for(int i = 0;i < n;i++) {
+        ll x;cin>>x;
+        // check if it is perfect squrare
+        ll sq = sqrt(x);
+        if(sq * sq == x) {
+            // this is perfect square
+            // need to check whether the sqrt(x) prime or not
+            bool prime = true;
+            for(int j = 2;j * j <= sq;j++) {
+                if(sq % j == 0) {
+                    prime = false;
+                    break;
+                }
+            }
+            prime = (sq == 1 ? false : prime);
+            cout<<(prime ? "YES" : "NO")<<'\n';
+        }else {
+            cout<<"NO\n";
+        }
+    }
+}

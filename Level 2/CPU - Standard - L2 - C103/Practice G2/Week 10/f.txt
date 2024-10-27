@@ -1,0 +1,29 @@
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+vector<int>primes;
+const int N = 1e6;
+void pre() {
+    bitset<N>p;
+    p.set();
+    p[0] = p[1] = false;
+    for(int i = 2;i * i < N;i++) {
+        if(p[i]) {
+            for(int j = i * i;j < N;j += i) {
+                p[j] = false;
+            }
+        }
+    }
+    for(int i = 2;i < N && primes.size() <= 1e4;i++) {
+        if(p[i])primes.emplace_back(i);
+    }
+}
+int main() {
+    ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+    int t;cin>>t;
+    pre();
+    while(t--) {
+        int n;cin>>n;
+        cout<<primes[n - 1]<<'\n';
+    }
+}

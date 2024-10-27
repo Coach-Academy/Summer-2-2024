@@ -1,0 +1,52 @@
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+vector<int>primes;
+const int N = 1e6;
+void pre() {
+    bitset<N>p;
+    p.set();
+    p[0] = p[1] = false;
+    for(int i = 2;i * i < N;i++) {
+        if(p[i]) {
+            for(int j = i * i;j < N;j += i) {
+                p[j] = false;
+            }
+        }
+    }
+    for(int i = 2;i < N;i++) {
+        if(p[i])primes.emplace_back(i);
+    }
+}
+int grid[500][500];
+int main() {
+    ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+    pre();
+    int n , m;cin>>n>>m;
+    for(int i = 0;i < n;i++) {
+        for(int j = 0;j < m;j++)
+            cin>>grid[i][j];
+    }
+    ll best = 1e15;
+    auto row  = [&](int idx)->ll {
+        ll res = 0;
+        for(int j = 0;j < m;j++) {
+            res += *lower_bound(primes.begin() , primes.end() , grid[idx][j]) - grid[idx][j];
+        }
+        return res;
+    };
+    auto col  = [&](int idx)->ll {
+        ll res = 0;
+        for(int j = 0;j < n;j++) {
+            res += *lower_bound(primes.begin() , primes.end() , grid[j][idx]) - grid[j][idx];
+        }
+        return res;
+    };
+    for(int i = 0;i < n;i++) {
+        best = min(best , row(i));
+    }
+    for(int i = 0;i < m;i++) {
+        best = min(best , col(i));
+    }
+    cout<<best<<'\n';
+}

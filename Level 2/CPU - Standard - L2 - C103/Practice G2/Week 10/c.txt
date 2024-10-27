@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+ll n;
+vector<ll>factorize(ll x) {
+  vector<ll>res;
+  for(ll i = 2;i * i <= x;i++) {
+    while(x % i == 0) {
+        res.emplace_back(i);
+        x /= i;
+    }
+  }
+  if(x != 1)res.emplace_back(x);
+  return res;
+}
+
+int main() {
+  ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+  int t;cin>>t;
+  while(t--){
+      cin>>n;
+      auto x = factorize(n);
+      map<ll , int>mp;
+      for(auto &val:x)mp[val]++;
+      int mx = 0;
+      ll value = 0;
+      for(auto &val:mp) {
+        if(val.second > mx) {
+          mx = val.second;
+          value = val.first;
+        }
+      }
+      cout<<mx<<'\n';
+      mx--;
+      while(mx--)cout<<value<<" " , mp[value]--;
+      ll prod = 1;
+      for(auto &val:mp) {
+        prod *= pow(val.first , val.second);
+      }
+      cout<<prod<<'\n';
+  }
+}

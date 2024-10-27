@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+bitset<2001>prime;
+const int N = 2000;
+vector<int>sieve(int n) {
+  prime.set();
+  prime[0] = prime[1] = false;
+  for(int i = 2;i <= N;i++) {
+    if(prime[i]) {
+      for(int j = i * i ; j <= n;j += i) {
+        prime[j] = false;
+      }
+    }
+  }
+  vector<int>res;
+  for(int i = 2;i <= n;i++) {
+    if(prime[i])res.emplace_back(i);
+  }
+  return  res;
+}
+int main() {
+  ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+  int n , k;cin>>n>>k;
+  int cnt = 0;
+  auto x = sieve(n);
+  // for(auto &val:x)cout<<val<<" ";
+  cout<<endl;
+  bitset<2001>nold;
+  for(int i = 0;i < x.size() - 1;i++) {
+    if(prime[x[i] + x[i + 1] + 1])
+      nold[x[i] + x[i + 1] + 1] = true;
+  }
+  for(int i = 1;i <= n;i++)cnt += nold[i];
+  cout<<(cnt >= k ? "YES":"NO")<<'\n';
+}
