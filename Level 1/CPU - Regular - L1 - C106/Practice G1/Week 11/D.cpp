@@ -4,10 +4,10 @@ using namespace std;
 
 #define endl '\n'
 
-int fib(int n) {
-    if (n <= 1)
-        return n;
-    return fib(n - 1) + fib(n - 2);
+int solve(int n, int k) {
+    if (n <= k)
+        return 1;
+    return solve(n / 2, k) + solve(n / 2 + n % 2, k);
 }
 
 int main() {
@@ -15,9 +15,9 @@ int main() {
     int t = 1;
 //    cin >> t;
     while (t--) {
-        int n;
-        cin >> n;
-        cout << fib(n) << endl;
+        int n, k;
+        while (cin >> n >> k)
+            cout << solve(n, k) << endl;
 
     }
     return 0;

@@ -4,10 +4,14 @@ using namespace std;
 
 #define endl '\n'
 
-int fib(int n) {
-    if (n <= 1)
-        return n;
-    return fib(n - 1) + fib(n - 2);
+int calc(int n) {
+    return (n * (n + 1) / 2);
+}
+
+int solve(int i, int n) {
+    if (calc(i) >= n)
+        return i;
+    return solve(i + 1, n);
 }
 
 int main() {
@@ -17,8 +21,7 @@ int main() {
     while (t--) {
         int n;
         cin >> n;
-        cout << fib(n) << endl;
-
+        cout << solve(0, n) << endl;
     }
     return 0;
 }
